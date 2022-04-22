@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from './Loading';
 
@@ -10,22 +11,15 @@ class Login extends React.Component {
     // this.inputValidation = this.inputValidation.bind(this);
 
     this.state = {
-      // btnDisable: true,
-      // name: '',
-      // loading: false,
-      // user: [],
-      inputChange: '',
+      name: '',
+      loading: false,
+      direct: false,
     };
   }
 
-  // async componentDidMount() {
-  //   const user = await createUser();
-  //   this.setState({ user });
-  // }
-
   // Requisito 02 controlando meu input
-  onInputChange(event) {
-    const { name, value } = event.target;
+  onInputChange({ target }) {
+    const { name, value } = target;
 
     this.setState({
       [name]: value,
@@ -43,24 +37,22 @@ class Login extends React.Component {
   // }
 
   // NÃO FUNCIONA AINDA - quando clica aparece loading
-  onClickButton({ target }) {
-    const { name, value } = target;
-
-    this.setState({
-      [name]: value,
-    });
-
-    createUser({ name });
-    // console.log(createUser);
-
+  async onClickButton() {
+    const { name } = this.state;
     this.setState({
       loading: true,
-      inputChange: true,
+    });
+
+    await createUser({ name });
+
+    this.setState({
+      loading: false,
+      direct: true,
     });
   }
 
   render() {
-    const { inputChange } = this.state;
+    const { name, direct } = this.state;
     const { loading } = this.state;
     // Requisito 02 função validação do input
     const minCharacters = 3;
@@ -75,15 +67,16 @@ class Login extends React.Component {
                 data-testid="login-name-input"
                 placeholder="Digite seu nome"
                 onChange={ this.onInputChange }
-                value={ inputChange }
-                name="inputChange"
+                value={ name }
+                name="name"
+                type="text"
               />
             </form>
             <div className="login">
               <button
                 type="submit"
                 data-testid="login-submit-button"
-                disabled={ inputChange.length < minCharacters }
+                disabled={ name.length < minCharacters }
                 // disabled={ btnDisable }
                 onClick={ this.onClickButton }
               >
@@ -92,6 +85,7 @@ class Login extends React.Component {
             </div>
           </div>
         )}
+        { direct ? <Redirect to="/search" /> : null }
       </div>
 
     );
