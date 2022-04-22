@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(32, 42, 54);
 }
 
 code {
@@ -12,8 +13,144 @@ code {
     monospace;
 }
 
-.loading {
-  align-items: center;
+header {
   display: flex;
   justify-content: center;
+  color: white;
+  height: 100px;
+  border: 2px solid #61dafb4f;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.link01 {
+  display: flex;
+  justify-content: center;
+  width: 33%;
+  height: 95%;
+  font-size: 3vh;
+  margin-top: 35px;
+}
+
+.link02 {
+  display: flex;
+  justify-content: center;
+  width: 34%;
+  height: 95%;
+  font-size: 3vh;
+  margin-top: 35px;
+}
+
+.link03 {
+  display: flex;
+  justify-content: center;
+  /* background-color: rgb(11, 158, 188); */
+  width: 33%;
+  height: 100%;
+  font-size: 3vh;
+  margin-top: 35px;
+}
+
+h3 {
+  color: #61DAFB;
+  margin-left: 30px;
+}
+
+.profileEdit {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.profile-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-direction: row; */
+  width: auto;
+  height: 30px;
+}
+
+.btnProfileEdit {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/*Component Search*/
+.search {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+/*Component Search*/
+.btnSearch {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+p {
+  color: #61DAFB;
+  margin-top: 50px;
+  font-size: 20px;
+}
+
+/*App*/
+.AppParagraph {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 30px;
+}
+
+/*App*/
+.inputHeaderApp {
+  border-radius: 30px;
+  display: flex;
+}
+
+/*Component Loading*/
+.loading {
+  align-items: baseline;
+  display: flex;
+  justify-content: center;
+  color: #61DAFB;
+  font-size: 40px;
+  align-items: center;
+}
+
+/*Todos os inputs*/
+input {
+  margin-left: 30px;
+  padding: 10px;
+  width: 350px;
+}
+
+/*Todos os botões*/
+button {
+  margin-left: 30px;
+  margin-top: 10px;
+  width: 373px;
+  height: 30px;
+  background-color: #61DAFB;
+  border: none;
+  padding: 10px;
+}
+
+.divButton {
+  display: flex;
+}
+
+/*Component Login*/
+.page-login {
+  margin-top: 50px;
 }
