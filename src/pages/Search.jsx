@@ -1,13 +1,18 @@
 import React from 'react';
 import Header from '../components/Header';
+// import Loading from './Loading';
+import searchAlbumsAPIs from '../services/searchAlbumsAPI';
 
 class Search extends React.Component {
   constructor() {
     super();
+    this.clickPesquisar = this.clickPesquisar.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.state = {
       inputChange: '',
-      // input: '',
+      // loading: false,
+      albumResult: 'Resultado de álbuns de: ',
+      saveInputChange: '',
     };
   }
 
@@ -21,14 +26,27 @@ class Search extends React.Component {
   }
 
   // Requisito 06 Não faço idéia como fazer isso...
-  // clickPesquisar(event) {
-  //   const { input } = this.state;
-  //   input.event.target = '';
-  // }
+  async clickPesquisar(event) {
+    event.preventDefault();
+    const { inputChange } = this.state;
+
+    this.setState({
+      // loading: true,
+    });
+
+    const result = await searchAlbumsAPIs(inputChange);
+    console.log(result);
+
+    this.setState({
+      // loading: false,
+      saveInputChange: inputChange,
+      inputChange: '',
+    });
+  }
 
   render() {
     // 5. Crie o formulário para pesquisar artistas (input)
-    const { inputChange } = this.state;
+    const { inputChange, saveInputChange, albumResult } = this.state;
     const characters = 2;
     return (
       <div>
@@ -48,9 +66,14 @@ class Search extends React.Component {
               data-testid="search-artist-button"
               // 5. Crie o formulário para pesquisar artistas (input)
               disabled={ inputChange.length < characters }
+              onClick={ this.clickPesquisar }
             >
               Pesquisar
             </button>
+            <h3>
+              { albumResult }
+              { saveInputChange }
+            </h3>
           </form>
         </div>
       </div>
