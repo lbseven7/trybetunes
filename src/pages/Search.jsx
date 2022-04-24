@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-// import Loading from './Loading';
-import searchAlbumsAPIs from '../services/searchAlbumsAPI';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import Loading from './Loading';
 
 class Search extends React.Component {
   constructor() {
@@ -10,8 +11,10 @@ class Search extends React.Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.state = {
       inputChange: '',
-      // loading: false,
-      albumResult: 'Resultado de álbuns de: ',
+      result: [],
+      loading: false,
+      albumResult: '',
+      notFound: '',
       saveInputChange: '',
     };
   }
@@ -25,59 +28,90 @@ class Search extends React.Component {
     }, this.onClickButton);
   }
 
-  // Requisito 06 Não faço idéia como fazer isso...
-  async clickPesquisar(event) {
-    event.preventDefault();
+  // Requisito 06
+  async clickPesquisar() {
+    // event.preventDefault();
     const { inputChange } = this.state;
 
     this.setState({
-      // loading: true,
+      loading: true,
+      // result: await searchAlbumsAPIs(inputChange), // Dilenio
     });
 
-    const result = await searchAlbumsAPIs(inputChange);
-    console.log(result);
+    const result = await searchAlbumsAPI(inputChange);
 
     this.setState({
-      // loading: false,
+      result,
+      loading: false,
       saveInputChange: inputChange,
       inputChange: '',
+      notFound: 'Nenhum álbum foi encontrado',
+      albumResult: 'Resultado de álbuns de: ',
     });
   }
 
   render() {
     // 5. Crie o formulário para pesquisar artistas (input)
-    const { inputChange, saveInputChange, albumResult } = this.state;
+    const {
+      inputChange,
+      saveInputChange,
+      albumResult,
+      result,
+      loading,
+      notFound,
+    } = this.state;
     const characters = 2;
     return (
-      <div>
+      <>
         <Header />
-        <div className="search" data-testid="page-search">
-          <form>
-            <input
-              data-testid="search-artist-input"
-              onChange={ this.onInputChange }
-              value={ inputChange }
-              name="inputChange"
-              placeholder="Nome do Artista"
-            />
-            <button
-              className="btnSearch"
-              type="submit"
-              data-testid="search-artist-button"
-              // 5. Crie o formulário para pesquisar artistas (input)
-              disabled={ inputChange.length < characters }
-              onClick={ this.clickPesquisar }
-            >
-              Pesquisar
-            </button>
-            <h3>
-              { albumResult }
-              { saveInputChange }
-            </h3>
-          </form>
-        </div>
-      </div>
-
+        { loading && <Loading />}
+        { !loading && (
+          <div className="search" data-testid="page-search">
+            <form>
+              <input
+                data-testid="search-artist-input"
+                onChange={ this.onInputChange }
+                value={ inputChange }
+                name="inputChange"
+                placeholder="Nome do Artista"
+              />
+              <button
+                className="btnSearch"
+                type="button"
+                data-testid="search-artist-button"
+                // 5. Crie o formulário para pesquisar artistas (input)
+                disabled={ inputChange.length < characters }
+                onClick={ this.clickPesquisar }
+              >
+                Pesquisar
+              </button>
+            </form>
+            { result.length === 0 ? (<span>{ notFound }</span>) : (
+              <>
+                <h3>
+                  { albumResult }
+                  { saveInputChange }
+                </h3>
+                <div>
+                  { result.map((element) => (
+                    <div key={ element.collectionId }>
+                      <img src={ element.artworkUrl100 } alt={ element.collectionName } />
+                      <p>{ element.collectionName }</p>
+                      <p>{ element.artistName }</p>
+                      <Link
+                        to={ `/album/${element.collectionId}` }
+                        data-testid={ `link-to-album-${element.collectionId}` }
+                      >
+                        Álbum
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </>
     );
   }
 }

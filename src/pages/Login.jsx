@@ -36,7 +36,6 @@ class Login extends React.Component {
   //   }
   // }
 
-  // NÃO FUNCIONA AINDA - quando clica aparece loading
   async onClickButton() {
     const { name } = this.state;
     this.setState({
@@ -87,7 +86,6 @@ class Login extends React.Component {
         )}
         { direct ? <Redirect to="/search" /> : null }
       </div>
-
     );
   }
 }
