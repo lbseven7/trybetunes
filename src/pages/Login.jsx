@@ -57,7 +57,7 @@ class Login extends React.Component {
     const minCharacters = 3;
     return (
       <div>
-        <p>Login</p>
+        {/* <p>Login</p> */}
         { loading ? (<Loading />
         ) : (
           <div className="page-login" data-testid="page-login">

@@ -1,48 +1,27 @@
 import React from 'react';
-import Loading from '../pages/Loading';
-import Header from './Header';
-// import favoriteSongsAPI from '../services/favoriteSongsAPI';
+import PropTypes from 'prop-types';
 
-// Requisito 08 lista de músicas favoritas
 class MusicCard extends React.Component {
-//   constructor() {
-//     super();
-
-  //     this.state = {
-  //       //   favotites: [],
-  //     //   inputChange: '',
-  //     };
-  //   }
-
-  // 8. Crie o mecanismo para adicionar músicas na lista de músicas favoritas - NÃO FUNCIONA AINDA
-  //   async componentDidMount() {
-  //     const favorites = await favoriteSongsAPI();
-  //     this.setState({ favorites });
-  //   }
-
   render() {
-    // const { inputChange } = this.state;
+    const { previewUrl, trackName } = this.props;
     return (
       <div>
-        <Header />
-        <Loading />
-        <h3>MusicCard</h3>
-        <label htmlFor="track">
-          Favorita
-          <input
-            id="track"
-            type="checkbox"
-            data-testid={ `checkbox-music-${trackId}` }
-            // name=""
-            // value={}
-            checked
-            // name="inputChange"
-            // value={ inputChange }
-          />
-        </label>
+        <h3>{ trackName }</h3>
+        <audio data-testid="audio-component" src={ previewUrl } controls>
+          <track kind="captions" />
+          O seu navegador não suporta o elemento
+          {' '}
+          <code>audio</code>
+          .
+        </audio>
       </div>
     );
   }
 }
+
+MusicCard.propTypes = {
+  previewUrl: PropTypes.string,
+  trackName: PropTypes.string,
+}.isRequired;
 
 export default MusicCard;
