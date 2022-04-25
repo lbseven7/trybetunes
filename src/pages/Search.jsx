@@ -35,7 +35,6 @@ class Search extends React.Component {
 
     this.setState({
       loading: true,
-      // result: await searchAlbumsAPIs(inputChange), // Dilenio
     });
 
     const result = await searchAlbumsAPI(inputChange);

@@ -42,6 +42,16 @@ class Album extends React.Component {
             key={ element.trackId }
             trackName={ element.trackName }
             previewUrl={ element.previewUrl }
+            favoriteSongs={
+              {
+                artistId: element.artistId,
+                artistName: element.artistName,
+                collectionName: element.collectionName,
+                collectionPrice: element.collectionPrice,
+                artworkUrl100: element.artworkUrl100,
+                releaseDate: element.releaseDate,
+                trackCount: element.trackCount }
+            }
           />
         )) }
       </div>
