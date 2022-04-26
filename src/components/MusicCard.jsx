@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import addSong from '../services/favoriteSongsAPI';
+import { addSong } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 // ajuda Lucas Moreti
@@ -11,19 +11,34 @@ class MusicCard extends React.Component {
     this.state = {
       loading: false,
       checked: false,
+      // isFavorite: false,
     };
   }
 
-  async favorite() {
+  // Requisito 9
+  // componentDidMount() {
+  //   const { favoriteMusic } = this.props;
+  //   if (favoriteMusic) {
+  //     this.setState({
+  //       isFavorite: true,
+  //     });
+  //   }
+  // }
+
+  async favorite({ target }) {
     const { favoriteSongs } = this.props;
+    const valueCheck = target.type === 'checkbox' ? target.checked : target.value;
+
     this.setState({
       loading: true,
+      checked: valueCheck,
     });
 
     await addSong(favoriteSongs);
 
     this.setState({
       loading: false,
+      // checked: valueCheck,
     });
   }
 

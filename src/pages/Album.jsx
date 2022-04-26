@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+// import Loading from './Loading';
+// import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Album extends React.Component {
   constructor() {
@@ -15,6 +17,7 @@ class Album extends React.Component {
 
   componentDidMount() {
     this.pegarMusicas();
+    // getFavoriteSongs();
   }
 
   async pegarMusicas() {
@@ -37,11 +40,13 @@ class Album extends React.Component {
           <span data-testid="artist-name">{ audios[0]?.artistName }</span>
           <span data-testid="album-name">{ audios[0]?.collectionName }</span>
         </div>
+
         { audios.filter((element) => (element.kind === 'song')).map((element) => (
           <MusicCard
             key={ element.trackId }
             trackName={ element.trackName }
             previewUrl={ element.previewUrl }
+            trackId={ element.trackId } // bug
             favoriteSongs={
               {
                 artistId: element.artistId,
@@ -50,7 +55,8 @@ class Album extends React.Component {
                 collectionPrice: element.collectionPrice,
                 artworkUrl100: element.artworkUrl100,
                 releaseDate: element.releaseDate,
-                trackCount: element.trackCount }
+                trackCount: element.trackCount,
+                trackId: element.trackId } // bug
             }
           />
         )) }
