@@ -8,10 +8,8 @@ class MusicCard extends React.Component {
   constructor() {
     super();
     this.favorite = this.favorite.bind(this);
-    // this.getFavorites = this.getFavorites.bind(this);
     this.state = {
       loading: false,
-      // checked: false,
       favoritesMusic: [],
     };
   }
@@ -24,6 +22,7 @@ class MusicCard extends React.Component {
     });
   }
 
+  // Requisito 09 ajuda do Guilherme Oliveira
   isFavorite = (trackId) => {
     const { favoritesMusic } = this.state;
     const isFavorite = favoritesMusic
@@ -45,6 +44,7 @@ class MusicCard extends React.Component {
       await removeSong(favoriteSongs);
     }
 
+    // Requisito 09 ajuda do Guilherme Oliveira
     const favoritesMusic = await getFavoriteSongs();
 
     this.setState({
