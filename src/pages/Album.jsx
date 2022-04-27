@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+// import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 // import Loading from './Loading';
 // import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
@@ -11,13 +12,16 @@ class Album extends React.Component {
     super();
     this.state = {
       audios: [],
+      // favoritesMusic: [],
+      // loadMusic: true,
     };
     this.pegarMusicas = this.pegarMusicas.bind(this);
+    // this.favorites = this.favorites.bind(this);
   }
 
   componentDidMount() {
     this.pegarMusicas();
-    // getFavoriteSongs();
+    // this.favorites();
   }
 
   async pegarMusicas() {
@@ -29,6 +33,15 @@ class Album extends React.Component {
       audios,
     });
   }
+
+  // Requisito 09
+  // async favorites() {
+  //   const { favoritesMusic } = this.state;
+  //   const favoritesMusic = await getFavoriteSongs();
+  //   this.setState({
+  //     favoritesMusic: [...audios]
+  //   }, () => { const { favoritesMusic } = this.state; });
+  // }
 
   render() {
     const { audios } = this.state;
@@ -46,20 +59,10 @@ class Album extends React.Component {
             key={ element.trackId }
             trackName={ element.trackName }
             previewUrl={ element.previewUrl }
-            trackId={ element.trackId } // bug
-            favoriteSongs={
-              {
-                artistId: element.artistId,
-                artistName: element.artistName,
-                collectionName: element.collectionName,
-                collectionPrice: element.collectionPrice,
-                artworkUrl100: element.artworkUrl100,
-                releaseDate: element.releaseDate,
-                trackCount: element.trackCount,
-                trackId: element.trackId } // bug
-            }
+            trackId={ element.trackId } // bugou ajuda do Isaac
+            favoriteSongs={ element }
           />
-        )) }
+        ))}
       </div>
     );
   }

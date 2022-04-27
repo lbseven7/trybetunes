@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 // ajuda Lucas Moreti
@@ -8,42 +8,53 @@ class MusicCard extends React.Component {
   constructor() {
     super();
     this.favorite = this.favorite.bind(this);
+    // this.getFavorites = this.getFavorites.bind(this);
     this.state = {
       loading: false,
-      checked: false,
-      // isFavorite: false,
+      // checked: false,
+      favoritesMusic: [],
     };
   }
 
-  // Requisito 9
-  // componentDidMount() {
-  //   const { favoriteMusic } = this.props;
-  //   if (favoriteMusic) {
-  //     this.setState({
-  //       isFavorite: true,
-  //     });
-  //   }
-  // }
+  // Requisito 09 ajuda do Guilherme Oliveira
+  async componentDidMount() {
+    const favorites = await getFavoriteSongs();
+    this.setState({
+      favoritesMusic: favorites,
+    });
+  }
+
+  isFavorite = (trackId) => {
+    const { favoritesMusic } = this.state;
+    const isFavorite = favoritesMusic
+      .some((element) => element.trackId === trackId);
+
+    return isFavorite;
+  }
 
   async favorite({ target }) {
     const { favoriteSongs } = this.props;
-    const valueCheck = target.type === 'checkbox' ? target.checked : target.value;
 
     this.setState({
       loading: true,
-      checked: valueCheck,
     });
 
-    await addSong(favoriteSongs);
+    if (target.checked) {
+      await addSong(favoriteSongs);
+    } else {
+      await removeSong(favoriteSongs);
+    }
+
+    const favoritesMusic = await getFavoriteSongs();
 
     this.setState({
       loading: false,
-      // checked: valueCheck,
+      favoritesMusic,
     });
   }
 
   render() {
-    const { loading, checked } = this.state;
+    const { loading } = this.state;
     const { previewUrl, trackName, trackId } = this.props;
     return (
       <div>
@@ -64,7 +75,7 @@ class MusicCard extends React.Component {
                 type="checkbox"
                 data-testid={ `checkbox-music-${trackId}` }
                 onChange={ this.favorite }
-                checked={ checked }
+                checked={ this.isFavorite(trackId) }
               />
             </label>
           </>
