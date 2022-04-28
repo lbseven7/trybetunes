@@ -9,26 +9,15 @@ class Favorites extends React.Component {
   constructor() {
     super();
     this.listFavorite = this.listFavorite.bind(this);
-    // this.reloadingUpdate = this.reloadingUpdate.bind(this);
     this.state = {
       listMusic: [],
       loading: false,
-      // reloading: false,
     };
   }
 
   componentDidMount() {
     this.listFavorite();
   }
-
-  // Requisito 12 Bônus
-  // componentDidUpdate(prevState) {
-  //   const { loading } = this.state;
-  //   if (prevState.loading !== loading) {
-  //     // this.listFavorite();
-  //     console.log('qualquer');
-  //   }
-  // }
 
   async listFavorite() {
     this.setState({
@@ -42,13 +31,6 @@ class Favorites extends React.Component {
       listMusic: songs,
     });
   }
-
-  // reloadingUpdate() {
-  //   const { reloading } = this.state;
-  //   this.setState({
-  //     reloading: !reloading,
-  //   });
-  // }
 
   render() {
     const { loading, listMusic } = this.state;
@@ -65,11 +47,9 @@ class Favorites extends React.Component {
                   previewUrl={ musics.previewUrl }
                   trackId={ musics.trackId }
                   favoriteSongs={ musics } // dica do Dilenio
-                  // reloading={ reloading }
-                  // reloadingUpdate={ this.reloadingUpdate }
+                  listFavorite={ this.listFavorite } // dica do Dilenio
                 />
               ))}
-
             </div>
           )}
       </div>

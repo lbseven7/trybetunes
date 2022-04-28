@@ -1,7 +1,21 @@
 import React from 'react';
 import Header from '../components/Header';
+// import { getUser } from '../services/userAPI';
 
 class ProfileEdit extends React.Component {
+  // primeiro
+  constructor() {
+    super();
+
+    this.state = {
+
+    };
+  }
+
+  // infoUserLogin() {
+  //   const user = await getUser();
+  // }
+
   render() {
     return (
       <div>
