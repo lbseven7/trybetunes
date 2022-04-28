@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-// import { getUser } from '../services/userAPI';
+import { getUser } from '../services/userAPI';
 
 class ProfileEdit extends React.Component {
   // primeiro
@@ -12,7 +12,7 @@ class ProfileEdit extends React.Component {
     };
   }
 
-  // infoUserLogin() {
+  // async infoUserLogin() {
   //   const user = await getUser();
   // }
 

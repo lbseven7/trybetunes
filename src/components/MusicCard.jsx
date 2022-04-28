@@ -42,7 +42,9 @@ class MusicCard extends React.Component {
       await addSong(favoriteSongs);
     } else {
       await removeSong(favoriteSongs);
-      listFavorite();
+      if (listFavorite) {
+        listFavorite();
+      }
     }
 
     // Requisito 09 ajuda do Guilherme Oliveira
