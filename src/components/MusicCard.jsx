@@ -32,7 +32,7 @@ class MusicCard extends React.Component {
   }
 
   async favorite({ target }) {
-    const { favoriteSongs } = this.props;
+    const { favoriteSongs, listFavorite } = this.props;
 
     this.setState({
       loading: true,
@@ -42,6 +42,7 @@ class MusicCard extends React.Component {
       await addSong(favoriteSongs);
     } else {
       await removeSong(favoriteSongs);
+      listFavorite();
     }
 
     // Requisito 09 ajuda do Guilherme Oliveira
