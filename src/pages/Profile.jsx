@@ -10,9 +10,14 @@ class Profile extends React.Component {
   constructor() {
     super();
     this.perfilExibition = this.perfilExibition.bind(this);
+    this.updated = this.updated.bind(this);
     this.state = {
       loading: true,
-      users: '',
+      // users: '',
+      name: 'a',
+      image: 'a',
+      email: 'a',
+      description: 'a',
     };
   }
 
@@ -20,12 +25,23 @@ class Profile extends React.Component {
     this.perfilExibition();
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
   // terceiro: função que vai chamar a getUser
   async perfilExibition() {
     this.setState((async () => {
       const user = await getUser();
       this.setState({
-        users: user,
+        name: user.name,
+        image: user.image,
+        email: user.email,
+        description: user.description,
       });
     }), () => {
       this.setState({
@@ -34,8 +50,13 @@ class Profile extends React.Component {
     });
   }
 
+  async updated() {
+    await updateUser();
+    // console.log('resposta da API', updated);
+  }
+
   render() {
-    const { users, loading } = this.state;
+    const { name, email, description, image, loading } = this.state;
     return (
       <div data-testid="page-profile">
         {loading ? <Loading /> : (
@@ -44,20 +65,21 @@ class Profile extends React.Component {
               <Header />
             </div>
             <div className="profile-div">
-              <img src={ users.image } data-testid="profile-image" alt="img-profile" />
+              <img src={ image } data-testid="profile-image" alt="img-profile" />
             </div>
 
             <div className="profile-div">
               <Link to="/profile/edit">
-                <button type="button">Editar perfil</button>
+                <button className="btnProfile" type="button">Editar perfil</button>
               </Link>
             </div>
-            <div />
-            <p>{ users.name }</p>
-            <p>{ users.email }</p>
-            <p>{ users.description }</p>
+            <div className="divUsers" />
+            <p>{ name }</p>
+            <p>{ email }</p>
+            <p>{ description }</p>
           </div>
         )}
+        <Link to="/profile"><span /></Link>
       </div>
     );
   }

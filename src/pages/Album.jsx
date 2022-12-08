@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import styles from './Album.module.css';
 // import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 // import Loading from './Loading';
 // import { getFavoriteSongs } from '../services/favoriteSongsAPI';
@@ -47,9 +48,9 @@ class Album extends React.Component {
     const { audios } = this.state;
 
     return (
-      <div data-testid="page-album">
+      <div>
         <Header />
-        <div>
+        <div data-testid={ styles.pageAlbum }>
           <span data-testid="artist-name">{ audios[0]?.artistName }</span>
           <span data-testid="album-name">{ audios[0]?.collectionName }</span>
         </div>

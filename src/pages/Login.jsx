@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from './Loading';
+import styles from './Login.module.css';
 
 class Login extends React.Component {
   constructor() {
@@ -56,8 +57,8 @@ class Login extends React.Component {
     // Requisito 02 função validação do input
     const minCharacters = 3;
     return (
-      <div>
-        {/* <p>Login</p> */}
+      <div className={ styles.container }>
+        {/* <img src="requisito6_2.gif" alt="" /> */}
         { loading ? (<Loading />
         ) : (
           <div className="page-login" data-testid="page-login">
@@ -70,18 +71,18 @@ class Login extends React.Component {
                 name="name"
                 type="text"
               />
+              <div className="login">
+                <button
+                  type="submit"
+                  data-testid="login-submit-button"
+                  disabled={ name.length < minCharacters }
+                  // disabled={ btnDisable }
+                  onClick={ this.onClickButton }
+                >
+                  Entrar
+                </button>
+              </div>
             </form>
-            <div className="login">
-              <button
-                type="submit"
-                data-testid="login-submit-button"
-                disabled={ name.length < minCharacters }
-                // disabled={ btnDisable }
-                onClick={ this.onClickButton }
-              >
-                Entrar
-              </button>
-            </div>
           </div>
         )}
         { direct ? <Redirect to="/search" /> : null }

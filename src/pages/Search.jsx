@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
+import styles from './Search.module.css';
 
 class Search extends React.Component {
   constructor() {
@@ -25,7 +26,7 @@ class Search extends React.Component {
 
     this.setState({
       [name]: value,
-    }, this.onClickButton);
+    });
   }
 
   // Requisito 06
@@ -65,9 +66,10 @@ class Search extends React.Component {
         <Header />
         { loading && <Loading />}
         { !loading && (
-          <div className="search" data-testid="page-search">
-            <form>
+          <div data-testid="page-search">
+            <form className={ styles.search }>
               <input
+                className="inputSearch"
                 data-testid="search-artist-input"
                 onChange={ this.onInputChange }
                 value={ inputChange }
@@ -85,29 +87,34 @@ class Search extends React.Component {
                 Pesquisar
               </button>
             </form>
-            { result.length === 0 ? (<span>{ notFound }</span>) : (
-              <>
-                <h3>
-                  { albumResult }
-                  { saveInputChange }
-                </h3>
-                <div>
-                  { result.map((element) => (
-                    <div key={ element.collectionId }>
-                      <img src={ element.artworkUrl100 } alt={ element.collectionName } />
-                      <p>{ element.collectionName }</p>
-                      <p>{ element.artistName }</p>
-                      <Link
-                        to={ `/album/${element.collectionId}` }
-                        data-testid={ `link-to-album-${element.collectionId}` }
-                      >
-                        Álbum
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+            <div className={ styles.albuns }>
+              { result.length === 0 ? (<span>{ notFound }</span>) : (
+                <>
+                  <h3>
+                    { albumResult }
+                    { saveInputChange }
+                  </h3>
+                  <div className={ styles.container }>
+                    { result.map((element) => (
+                      <div key={ element.collectionId }>
+                        <img
+                          src={ element.artworkUrl100 }
+                          alt={ element.collectionName }
+                        />
+                        <p>{ element.collectionName }</p>
+                        <p>{ element.artistName }</p>
+                        <Link
+                          to={ `/album/${element.collectionId}` }
+                          data-testid={ `link-to-album-${element.collectionId}` }
+                        >
+                          Álbum
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         )}
       </>
